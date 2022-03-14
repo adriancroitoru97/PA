@@ -1,2 +1,2 @@
-# PA
+# PA - Proiectarea Algoritmilor
  

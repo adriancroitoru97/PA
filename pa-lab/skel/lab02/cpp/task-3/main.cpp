@@ -21,6 +21,15 @@ private:
     int n;
     vector<Homework> hws;
 
+    class Compare
+    {
+        public:
+            bool operator() (Homework a, Homework b)
+            {
+                return a.score < b.score;
+            }
+    };
+
     void read_input() {
         ifstream fin("in");
         fin >> n;
@@ -35,7 +44,29 @@ private:
         // TODO: Aflati punctajul maxim pe care il puteti obtine planificand
         // optim temele.
 
-        return 0;
+        int score = 0;
+        priority_queue<Homework, vector<Homework>, Compare> pq;
+
+        sort(hws.begin(), hws.end(), [ ](Homework& lhs, Homework& rhs )
+        {
+            return lhs.deadline > rhs.deadline;
+        });
+
+        int j = 0;
+        for (int i = hws[0].deadline; i > 0; i--) {
+            while (hws[j].deadline >= i && j < hws.size()) {
+                pq.push(hws[j]);
+                j++;
+            }
+
+            if (pq.size()) {
+                score += pq.top().score;
+                pq.pop();
+            }
+            
+        }
+
+        return score;
     }
 
     void print_output(int result) {

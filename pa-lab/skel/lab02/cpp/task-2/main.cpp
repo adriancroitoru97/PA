@@ -26,7 +26,19 @@ private:
         // TODO: Aflati numarul minim de opriri necesare pentru a ajunge
         // la destinatie.
 
-        return 0;
+        int stops = 0;
+        int m_copy = m - dist[0];
+
+        for (int i = 1; i < dist.size(); i++) {
+            if (m - (dist[i] - dist[i - 1]) > 0) {
+                m -= (dist[i] - dist[i - 1]);
+            } else {
+                stops++;
+                m = m_copy;
+            }
+        }
+
+        return stops;
     }
 
     void print_output(int result) {
